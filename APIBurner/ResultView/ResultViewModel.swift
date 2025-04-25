@@ -8,6 +8,7 @@
 import Foundation
 
 class ResultViewModel : ObservableObject {
+    var requestData : RequestDataModel
     var successCount : Int {
         testResults.map({$0.isSuccess}).count
     }
@@ -17,6 +18,13 @@ class ResultViewModel : ObservableObject {
     }
     var totalCount : Int = 100
     @Published var testResults : [TestResult] = []
+    init(requestData: RequestDataModel) {
+        self.requestData = requestData
+        self.totalCount = requestData.numberOfRequests
+        //network manager call starts {
+        
+//    }
+    }
     
 }
 struct TestResult {

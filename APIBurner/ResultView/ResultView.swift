@@ -24,7 +24,20 @@ struct ResultView: View {
 }
 
 #Preview {
-    ResultView(viewModel: ResultViewModel())
+    ResultView(
+        viewModel: ResultViewModel(
+            requestData: RequestDataModel(
+                urlString: "",
+                requestMethod: .get,
+            numberOfRequests:1,
+                batchSize: 1,
+                requestInterval: 1,
+                useURlComponents: true,
+                queryParams: [],
+                headerParams: []
+            )
+        )
+    )
 }
 struct ResultHeaderView : View {
     var body: some View {

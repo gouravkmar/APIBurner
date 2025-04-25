@@ -8,23 +8,23 @@
 import SwiftUI
 
 struct MainView: View {
-    @ObservedObject var mainViewModel : MainViewModel
+    @ObservedObject var viewModel : MainViewModel
     var body: some View {
         NavigationStack {
             ScrollView{
                 VStack(spacing: 25){
                     mainTitle
-                    UseStructuredURLSwitch(useURLComponents: $mainViewModel.useURlComponents)
-                    URLField(urlString: $mainViewModel.urlString)
-                    if mainViewModel.useURlComponents{
-                        QueryView(queryParams: $mainViewModel.queryParams)
+                    UseStructuredURLSwitch(useURLComponents: $viewModel.useURlComponents)
+                    URLField(isEndpoint: $viewModel.useURlComponents, urlString: $viewModel.urlString)
+                    if viewModel.useURlComponents{
+                        QueryView(queryParams: $viewModel.queryParams)
                     }
-                    HeaderView(headerParams: $mainViewModel.headerParams)
-                    RequestField(method: $mainViewModel.requestMethod)
-                    NumberRequestsPicker(numberOfRequests: $mainViewModel.numberOfRequests)
-                    BatchSizePicker(batchSize: $mainViewModel.batchSize)
-                    IntervalPicker(interval: $mainViewModel.requestInterval)
-                    NavigationLink(destination: RunningTestView(viewModel: ResultViewModel()), label: {
+                    HeaderView(headerParams: $viewModel.headerParams)
+                    RequestField(method: $viewModel.requestMethod)
+                    NumberRequestsPicker(numberOfRequests: $viewModel.numberOfRequests)
+                    BatchSizePicker(batchSize: $viewModel.batchSize)
+                    IntervalPicker(interval: $viewModel.requestInterval)
+                    NavigationLink(destination: RunningTestView(viewModel: ResultViewModel(requestData: viewModel.toRequestDataModel())), label: {
                         StartButton
                     }
                     )
@@ -49,15 +49,20 @@ struct MainView: View {
 }
 
 #Preview {
-    MainView(mainViewModel: MainViewModel())
+    MainView(viewModel: MainViewModel())
 }
 
 struct URLField : View {
+    @Binding var isEndpoint : Bool
     @Binding var urlString : String
     var body: some View{
         VStack{
             HStack{
-                Text("URL")
+                if isEndpoint {
+                    Text("Endpoint")
+                }else {
+                    Text("URL")
+                }
                 Spacer()
             }
             TextField(" url", text: $urlString)

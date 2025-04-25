@@ -17,6 +17,19 @@ class MainViewModel : ObservableObject{
     @Published var useURlComponents : Bool = true
     @Published var queryParams : [KeyValPair] = [KeyValPair(key: "", value: "")]
     @Published var headerParams : [KeyValPair] = [KeyValPair(key: "", value: "")]
+    
+    func toRequestDataModel() -> RequestDataModel {
+            return RequestDataModel(
+                urlString: urlString,
+                requestMethod: requestMethod,
+                numberOfRequests: numberOfRequests,
+                batchSize: batchSize,
+                requestInterval: requestInterval,
+                useURlComponents: useURlComponents,
+                queryParams: queryParams,
+                headerParams: headerParams
+            )
+        }
 }
 
 enum RequestMethod : String, CaseIterable,Identifiable{
@@ -33,3 +46,14 @@ struct KeyValPair : Identifiable{
     var key : String
     var value : String
 }
+struct RequestDataModel {
+    var urlString: String
+    var requestMethod: RequestMethod
+    var numberOfRequests: Int
+    var batchSize: Int
+    var requestInterval: Int
+    var useURlComponents: Bool
+    var queryParams: [KeyValPair]
+    var headerParams: [KeyValPair]
+}
+

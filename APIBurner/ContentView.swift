@@ -9,7 +9,7 @@ import SwiftUI
 
 struct ContentView: View {
     var body: some View {
-        MainView(mainViewModel: MainViewModel())
+        MainView(viewModel: MainViewModel())
     }
 }
 
