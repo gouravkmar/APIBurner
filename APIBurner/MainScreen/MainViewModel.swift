@@ -12,7 +12,7 @@ class MainViewModel : ObservableObject{
     @Published var urlString : String = ""
 //    https://postman-echo.com/get
     @Published var requestMethod : RequestMethod = .get
-    @Published var numberOfRequests : Int = 100
+    @Published var numberOfRequests : Int = 10
     @Published var batchSize : Int = 1
     @Published var requestInterval : Int = 1
     @Published var useURlComponents : Bool = true

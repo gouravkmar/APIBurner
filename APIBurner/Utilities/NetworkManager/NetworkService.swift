@@ -46,6 +46,7 @@ class NetworkService : NetworkServiceProtocol{
                 let workItem = DispatchWorkItem { [weak self] in
                     guard let self = self else { return }
                     let currTime = Date().timeIntervalSince1970 * 1000
+                    let uuid = viewModel?.uuid
                     self.networkManager.request(urlRequest: request, completion: {result in
                         defer {self.group.leave()}
                         let elapsedTime = Date().timeIntervalSince1970 * 1000 - currTime
@@ -57,9 +58,11 @@ class NetworkService : NetworkServiceProtocol{
                         case .failure(let error):
                             statusCode = -1
                         }
-                        let testResult = TestResult(responseTime: elapsedTime, statusCode: statusCode)
-                        DispatchQueue.main.async {
-                            self.viewModel?.testResults.append(testResult)
+                        if uuid == self.viewModel?.uuid {
+                            let testResult = TestResult(responseTime: elapsedTime, statusCode: statusCode)
+                            DispatchQueue.main.async {
+                                self.viewModel?.testResults.append(testResult)
+                            }
                         }
                         
                         
@@ -76,6 +79,16 @@ class NetworkService : NetworkServiceProtocol{
         }
         
         
+        
+    }
+    
+    func cencelAllRequests(){
+        for workItem in workItems {
+            if !workItem.isCancelled{
+                workItem.cancel()
+            }
+        }
+        self.viewModel?.testResults = []
         
     }
     //cancel request method for back and rerequests

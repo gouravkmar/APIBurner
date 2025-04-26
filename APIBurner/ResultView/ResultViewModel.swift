@@ -16,6 +16,7 @@ class ResultViewModel : ObservableObject {
     var totalRunningCount : Int {
         testResults.count
     }
+    var uuid : UUID
     var avgResTime : Int {
         var total = 0.0
         testResults.map{ total = total + $0.responseTime}
@@ -35,10 +36,12 @@ class ResultViewModel : ObservableObject {
     var totalCount : Int = 100
     @Published var shouldPresent = false
     @Published var testResults : [TestResult] = []
-    init(requestData: RequestDataModel) {
+    init(requestData: RequestDataModel,uuid : UUID) {
         self.requestData = requestData
         self.totalCount = requestData.numberOfRequests
+        self.uuid = uuid
         NetworkService.shared.viewModel = self
+        
         makeRequest()
         //network manager call starts {
         
@@ -46,6 +49,9 @@ class ResultViewModel : ObservableObject {
     }
     func makeRequest(){
         NetworkService.shared.makeRequest(requestData: requestData)
+    }
+    func cancelAllRequests(){
+        NetworkService.shared.cencelAllRequests()
     }
     
     
