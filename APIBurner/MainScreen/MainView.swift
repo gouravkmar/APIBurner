@@ -9,6 +9,10 @@ import SwiftUI
 
 struct MainView: View {
     @ObservedObject var viewModel : MainViewModel
+    @State private var isNavigationActive = false
+    //    @StateObject var resultViewModel : ResultViewModel
+    @State private var resultViewModel: ResultViewModel? = nil
+
     var body: some View {
         NavigationStack {
             ScrollView{
@@ -24,9 +28,20 @@ struct MainView: View {
                     NumberRequestsPicker(numberOfRequests: $viewModel.numberOfRequests)
                     BatchSizePicker(batchSize: $viewModel.batchSize)
                     IntervalPicker(interval: $viewModel.requestInterval)
-                    NavigationLink(destination: RunningTestView(viewModel: ResultViewModel(requestData: viewModel.toRequestDataModel())), label: {
-                        StartButton
-                    }
+                    NavigationLink(
+                        destination: Group {
+                            if let viewModel = resultViewModel {
+                                RunningTestView(viewModel: viewModel)
+                            }
+                        },
+                        isActive: $isNavigationActive,
+                        label: {
+                            StartButton
+                                .onTapGesture {
+                                    resultViewModel = ResultViewModel(requestData: viewModel.toRequestDataModel())
+                                    isNavigationActive = true
+                                }
+                        }
                     )
                     
                 }.padding(40)
@@ -109,7 +124,7 @@ struct NumberRequestsPicker : View {
             Text("Number of requests")
             Spacer()
             Picker("Number of requests", selection: $numberOfRequests, content: {
-                ForEach(Array(stride(from: 10, through: 100, by: 10)), id: \.self) { num in
+                ForEach(Array(stride(from: 100, through: 1000, by: 100)), id: \.self) { num in
                     Text("\(num)")
                 }
                 
@@ -154,8 +169,20 @@ struct ParamsField : View {
         HStack{
             TextField("Key",text: $keyValuePair.key)
                 .border(.gray)
+                .autocorrectionDisabled(true)
+                .autocapitalization(.none)
+                .onChange(of: keyValuePair.key) { oldValue, newValue in
+                        keyValuePair.key = newValue
+                            .replacingOccurrences(of: " ", with: "")
+                    }
             Spacer()
             TextField("Value",text: $keyValuePair.value)
+                .autocorrectionDisabled(true)
+                .autocapitalization(.none)
+                .onChange(of: keyValuePair.key) { oldValue, newValue in
+                        keyValuePair.key = newValue
+                            .replacingOccurrences(of: " ", with: "")
+                    }
                 .border(.gray)
             
             

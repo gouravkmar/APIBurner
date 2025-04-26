@@ -10,26 +10,48 @@ import Foundation
 class ResultViewModel : ObservableObject {
     var requestData : RequestDataModel
     var successCount : Int {
-        testResults.map({$0.isSuccess}).count
+        testResults.filter({$0.isSuccess}).count
     }
     var failureCount : Int {totalRunningCount - successCount}
     var totalRunningCount : Int {
         testResults.count
     }
+    var avgResTime : Int {
+        var total = 0.0
+        testResults.map{ total = total + $0.responseTime}
+        return Int(total / Double(max(testResults.count,1)))
+    }
+    
+    var maxResTime : Int {
+        var maxT = 0.0
+        testResults.map{ maxT = max(maxT, $0.responseTime)}
+        return Int(maxT)
+    }
+    var minResTime : Int {
+        var minT = Double.infinity
+        testResults.map{ minT = min(minT, $0.responseTime)}
+        return Int(minT)
+    }
     var totalCount : Int = 100
+    @Published var shouldPresent = false
     @Published var testResults : [TestResult] = []
     init(requestData: RequestDataModel) {
         self.requestData = requestData
         self.totalCount = requestData.numberOfRequests
+        NetworkService.shared.viewModel = self
+        makeRequest()
         //network manager call starts {
         
 //    }
     }
+    func makeRequest(){
+        NetworkService.shared.makeRequest(requestData: requestData)
+    }
+    
     
 }
 struct TestResult {
-    var reqTime : Double
-    var resTime : Double
+    var responseTime : Double
     var statusCode : Int
     var isSuccess : Bool {
         return statusCode >= 200 && statusCode < 300

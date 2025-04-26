@@ -20,29 +20,42 @@ struct RunningTestView: View {
                 
                 // Foreground circle (progress part)
                 Circle()
-                    .trim(from: 0,to: min(CGFloat(viewModel.totalRunningCount / viewModel.totalCount),1.0))
+                    .trim(from: 0,to: min(CGFloat(viewModel.totalRunningCount) / CGFloat(viewModel.totalCount),1.0))
                     .stroke(style: StrokeStyle(lineWidth: 20, lineCap: .round))
                     .foregroundColor(.blue)
                     .rotationEffect(.degrees(-90)) // Rotate to start at the top
                     .animation(
                         .easeInOut,
-                        value: viewModel.totalCount
+                        value: viewModel.totalRunningCount
                     )
             }
             .frame(width: 200, height: 200)
             .padding()
             Text("Running Tests").font(.title).fontWeight(.heavy)
-            ResultHeaderView()
+            ResultHeaderView(viewModel: viewModel)
+            if viewModel.totalCount == viewModel.totalRunningCount {
+                showResultButton
+            }
+            
             
         }.padding(25)
-            .sheet(isPresented: $isResultPresent,content: {
+            .sheet(isPresented: $viewModel.shouldPresent,content: {
                 ResultView(viewModel: viewModel)
             })
-            .onChange(of: viewModel.totalRunningCount, {
-                if viewModel.totalRunningCount == viewModel.totalCount {
-                    
-                }
-            })
+        
+    }
+    var showResultButton : some View {
+        Button {
+            viewModel.shouldPresent = true
+        } label: {
+            Text("Show Results")
+                .font(.headline)
+                .padding()
+                .background(Color.blue)
+                .foregroundStyle(.white)
+            
+        }
+
     }
 }
 
@@ -55,6 +68,7 @@ struct RunningTestView: View {
         requestInterval: 1,
         useURlComponents: true,
         queryParams: [],
-        headerParams: []
+        headerParams: [], usesURLComponents: true
     )))
 }
+

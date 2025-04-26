@@ -13,8 +13,8 @@ struct ResultView: View {
         ScrollView{
             VStack(spacing : 20){
                 titleView
-                ResultHeaderView()
-                TimeStats()
+                ResultHeaderView(viewModel: viewModel)
+                TimeStats(viewModel: viewModel)
             }
         }.padding()
     }
@@ -34,12 +34,13 @@ struct ResultView: View {
                 requestInterval: 1,
                 useURlComponents: true,
                 queryParams: [],
-                headerParams: []
+                headerParams: [], usesURLComponents: false
             )
         )
     )
 }
 struct ResultHeaderView : View {
+    @ObservedObject var viewModel : ResultViewModel
     var body: some View {
         VStack{
             Text("Sent")
@@ -49,7 +50,7 @@ struct ResultHeaderView : View {
                     .frame(width: 12, height: 12)
                 Text("Success")
                 Spacer()
-                Text("20")
+                Text("\(viewModel.successCount)")
             }
             HStack{
                 Image(systemName: "circle.fill")
@@ -57,7 +58,7 @@ struct ResultHeaderView : View {
                     .frame(width: 12, height: 12)
                 Text("Failure")
                 Spacer()
-                Text("20")
+                Text("\(viewModel.failureCount)")
             }
         }.padding()
             .background(
@@ -68,23 +69,24 @@ struct ResultHeaderView : View {
     }
 }
 struct TimeStats : View {
+    @ObservedObject var viewModel : ResultViewModel
     var body: some View {
         VStack{
             Text("Response Time(ms)")
             HStack{
                 Text("Min")
                 Spacer()
-                Text("150")
+                Text("\(viewModel.minResTime)")
             }
             HStack{
                 Text("Max")
                 Spacer()
-                Text("150")
+                Text("\(viewModel.maxResTime)")
             }
             HStack{
                 Text("Avg")
                 Spacer()
-                Text("150")
+                Text("\(viewModel.avgResTime)")
             }
         }.padding()
             .background(
