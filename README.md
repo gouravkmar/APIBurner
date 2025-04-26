@@ -40,20 +40,24 @@ It allows users to configure API request parameters, send multiple concurrent re
 ---
 ## 📸 Screenshots
 
-- **Test Configuration Screen**  
-  ![Test Configuration]([https://drive.google.com/uc?id=1ABCdefGHIjklMNOpqrSTUVwxYZ](https://drive.google.com/file/d/1KoUhqDVuU1NRrlZpzcCpwmRNrUw_bWgF/view?usp=drive_link))
 
-  - **Test Configuration Screen 2**  
-  ![Test Configuration]([https://drive.google.com/uc?id=1ABCdefGHIjklMNOpqrSTUVwxYZ](https://drive.google.com/file/d/1ON0-Uc2OlXGSFBKQygSiYYAleGgj_ppX/view?usp=drive_link))
+
+- **Test Configuration Screen**  
+  <img src="https://drive.google.com/uc?id=1KoUhqDVuU1NRrlZpzcCpwmRNrUw_bWgF" alt="Test Configuration" width="200"/>
+
+- **Test Configuration Screen 2**  
+  <img src="https://drive.google.com/uc?id=1ON0-Uc2OlXGSFBKQygSiYYAleGgj_ppX" alt="Test Configuration" width="200"/>
 
 - **Running Test Progress**  
-  ![Running Test]([https://drive.google.com/uc?id=2DEFghijKLMnopqRSTuvWXYZ](https://drive.google.com/file/d/1RB-UPZVWFerLtAmydW9MjRODOmCeD2Tn/view?usp=drive_link))
+  <img src="https://drive.google.com/uc?id=1RB-UPZVWFerLtAmydW9MjRODOmCeD2Tn" alt="Running Test" width="200"/>
 
-  - **Running Test Completion**  
-  ![Running Test]([https://drive.google.com/uc?id=2DEFghijKLMnopqRSTuvWXYZ](https://drive.google.com/file/d/1R5YUak7WTMwhjPyFHGSUXvH1N07HARKK/view?usp=drive_link))
+- **Running Test Completion**  
+  <img src="https://drive.google.com/uc?id=1R5YUak7WTMwhjPyFHGSUXvH1N07HARKK" alt="Running Test" width="200"/>
 
 - **Result View**  
-  ![Result View]([https://drive.google.com/uc?id=3GHIjklMNOpqrSTUVWXYZabc](https://drive.google.com/file/d/1IG7BbZYE7RW6mNGeKtBypYre-t5QhZtc/view?usp=drive_link))
+  <img src="https://drive.google.com/uc?id=1IG7BbZYE7RW6mNGeKtBypYre-t5QhZtc" alt="Result View" width="200"/>
+
+
 
 
 ## 🔹 Usage Instructions
