@@ -10,6 +10,7 @@ import Foundation
 
 class MainViewModel : ObservableObject{
     @Published var urlString : String = ""
+//    https://postman-echo.com/get
     @Published var requestMethod : RequestMethod = .get
     @Published var numberOfRequests : Int = 10
     @Published var batchSize : Int = 1
@@ -17,6 +18,7 @@ class MainViewModel : ObservableObject{
     @Published var useURlComponents : Bool = true
     @Published var queryParams : [KeyValPair] = [KeyValPair(key: "", value: "")]
     @Published var headerParams : [KeyValPair] = [KeyValPair(key: "", value: "")]
+    
     
     func toRequestDataModel() -> RequestDataModel {
             return RequestDataModel(
@@ -27,9 +29,10 @@ class MainViewModel : ObservableObject{
                 requestInterval: requestInterval,
                 useURlComponents: useURlComponents,
                 queryParams: queryParams,
-                headerParams: headerParams
+                headerParams: headerParams,
+                usesURLComponents: useURlComponents
             )
-        }
+    }
 }
 
 enum RequestMethod : String, CaseIterable,Identifiable{
@@ -55,5 +58,6 @@ struct RequestDataModel {
     var useURlComponents: Bool
     var queryParams: [KeyValPair]
     var headerParams: [KeyValPair]
+    var usesURLComponents : Bool
 }
 
